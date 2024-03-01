@@ -6,25 +6,35 @@ let lista = document.getElementById('lista-amigos');
 let sorteio = document.getElementById('lista-sorteio');
 
 function adicionar() {
-    //Adiciona o amigo na lista, se não for vazio.
+    //Condicional para se o nome for repetido.
+    if (amigos.includes(amigo.value)) {
+        alert(`O nome ${amigo.value} já foi adicionado.`);
+        return;
+    }
+    //Condicional para se o campo estiver vazio.
     if (amigo.value == '') {
         alert('Digite o nome de um amigo.');
+        return;
+    } 
+    //Adiciona o valor do campo amigo na lista de amigos.
+    amigos.push(amigo.value);
+    //Se a lista de amigos estiver vazia, adiciona o amigo.
+    if (lista.textContent == '') {
+        lista.textContent = amigo.value;
+    //Se não, adiciona o que estava antes mais o amigo.
     } else {
-        amigos.push(amigo.value);
-        //Se a lista de amigos estiver vazia, adiciona o amigo.
-        if (lista.textContent == '') {
-            lista.textContent = amigo.value;
-        //Se não, adiciona o que estava antes mais o amigo.
-        } else {
-            lista.textContent = lista.textContent + ', ' + amigo.value;
-        }
-        //Limpa o campo pra adicionar outro amigo.
-        amigo.value = '';
+        lista.textContent = lista.textContent + ', ' + amigo.value;
     }
+    //Limpa o campo pra adicionar outro amigo.
+    amigo.value = '';
 }
 
-
 function sortear () {
+    //Condicional para número mínimos de amigos no sorteio.
+    if (amigos.length < 4) {
+        alert('Adicione pelo menos 4 amigos.');
+        return;
+    }
     //Embaralha a ordem de amigos adicionados na array.
     embaralhar(amigos);
     //Esvazia o sorteio toda vez.
@@ -48,7 +58,6 @@ function reiniciar() {
     lista.textContent = '';
     sorteio.innerHTML = '';
     amigos = [];
-
 }
 
 //Função pronta tirada da internet que embaralha os elementos de uma array.
